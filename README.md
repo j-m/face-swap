@@ -1,3 +1,7 @@
+Can't say if all dependencies are installed, also cv2 and dlib are a pain:
+https://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/
+https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/
+
 This is the code behind the [Switching Eds blog post](http://matthewearl.github.io/2015/07/28/switching-eds-with-python/).
 
 See the link for an explanation of the code.
