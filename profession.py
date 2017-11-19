@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-#_gdf kno-fb-ctx
+
 name = 'anthony joshua'
 name = (name.split())
 search = 'https://www.google.co.uk/search?q='
@@ -12,8 +12,7 @@ result = requests.get(search[:-1])
 
 if result.status_code == requests.codes.ok:
     soup = BeautifulSoup(result.content,'lxml')
-soup = BeautifulSoup(result.text, 'lxml')
-print(len(soup))
+    print(len(soup))
 
-proffession = soup.find_all("div", class_="_zdb _Pxg")
-print(proffession[0].text)
+    profession = soup.find_all("div", class_="_zdb _Pxg")
+    print(profession[0].text)

@@ -39,10 +39,8 @@ import cv2
 import dlib
 import numpy
 
-import sys
-
 PREDICTOR_PATH = "/home/charlie/Documents/BrumHack/faceswap-master/shape_predictor_68_face_landmarks.dat"
-SCALE_FACTOR = 1 
+SCALE_FACTOR = 1
 FEATHER_AMOUNT = 11
 
 FACE_POINTS = list(range(17, 68))
@@ -56,7 +54,7 @@ JAW_POINTS = list(range(0, 17))
 
 # Points used to line up the images.
 ALIGN_POINTS = (LEFT_BROW_POINTS + RIGHT_EYE_POINTS + LEFT_EYE_POINTS +
-                               RIGHT_BROW_POINTS + NOSE_POINTS + MOUTH_POINTS)
+                RIGHT_BROW_POINTS + NOSE_POINTS + MOUTH_POINTS)
 
 # Points from the second image to overlay on the first. The convex hull of each
 # element will be overlaid.
@@ -72,21 +70,25 @@ COLOUR_CORRECT_BLUR_FRAC = 0.6
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(PREDICTOR_PATH)
 
+
 class TooManyFaces(Exception):
     pass
+
 
 class NoFaces(Exception):
     pass
 
+
 def get_landmarks(im):
     rects = detector(im, 1)
-    
+
     if len(rects) > 1:
         raise TooManyFaces
     if len(rects) == 0:
         raise NoFaces
 
     return numpy.matrix([[p.x, p.y] for p in predictor(im, rects[0]).parts()])
+
 
 def annotate_landmarks(im, landmarks):
     im = im.copy()
@@ -99,9 +101,11 @@ def annotate_landmarks(im, landmarks):
         cv2.circle(im, pos, 3, color=(0, 255, 255))
     return im
 
+
 def draw_convex_hull(im, points, color):
     points = cv2.convexHull(points)
     cv2.fillConvexPoly(im, points, color=color)
+
 
 def get_face_mask(im, landmarks):
     im = numpy.zeros(im.shape[:2], dtype=numpy.float64)
@@ -117,7 +121,8 @@ def get_face_mask(im, landmarks):
     im = cv2.GaussianBlur(im, (FEATHER_AMOUNT, FEATHER_AMOUNT), 0)
 
     return im
-    
+
+
 def transformation_from_points(points1, points2):
     """
     Return an affine transformation [s * R | T] such that:
@@ -154,6 +159,7 @@ def transformation_from_points(points1, points2):
                                        c2.T - (s2 / s1) * R * c1.T)),
                          numpy.matrix([0., 0., 1.])])
 
+
 def read_im_and_landmarks(fname):
     im = cv2.imread(fname, cv2.IMREAD_COLOR)
     im = cv2.resize(im, (im.shape[1] * SCALE_FACTOR,
@@ -161,6 +167,7 @@ def read_im_and_landmarks(fname):
     s = get_landmarks(im)
 
     return im, s
+
 
 def warp_im(im, M, dshape):
     output_im = numpy.zeros(dshape, dtype=im.dtype)
@@ -172,10 +179,11 @@ def warp_im(im, M, dshape):
                    flags=cv2.WARP_INVERSE_MAP)
     return output_im
 
+
 def correct_colours(im1, im2, landmarks1):
     blur_amount = COLOUR_CORRECT_BLUR_FRAC * numpy.linalg.norm(
-                              numpy.mean(landmarks1[LEFT_EYE_POINTS], axis=0) -
-                              numpy.mean(landmarks1[RIGHT_EYE_POINTS], axis=0))
+        numpy.mean(landmarks1[LEFT_EYE_POINTS], axis=0) -
+        numpy.mean(landmarks1[RIGHT_EYE_POINTS], axis=0))
     blur_amount = int(blur_amount)
     if blur_amount % 2 == 0:
         blur_amount += 1
@@ -186,7 +194,8 @@ def correct_colours(im1, im2, landmarks1):
     im2_blur += (128 * (im2_blur <= 1.0)).astype(im2_blur.dtype)
 
     return (im2.astype(numpy.float64) * im1_blur.astype(numpy.float64) /
-                                                im2_blur.astype(numpy.float64))
+            im2_blur.astype(numpy.float64))
+
 
 def birth(father, mother):
     im1, landmarks1 = read_im_and_landmarks(father)
