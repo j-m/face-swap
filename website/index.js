@@ -4,6 +4,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		if(busy==false){
 			busy = true;
+			$("#result").attr('src',"http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif");
 			var url = "http://4076c2c2.ngrok.io/get-child?father="+encodeURIComponent($('#father').val())+"&mother="+encodeURIComponent($('#mother').val());
 			$('#result').css('max-width','20rem');
 			$('#result').css('max-height','20rem');
