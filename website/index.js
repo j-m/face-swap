@@ -15,4 +15,8 @@ $(document).ready(function(){
 			.fail(function(jqXHR, textStatus, errorThrown) { $("#error").show(); });
 		}
 	});
+	$( "input" ).keyup(function() {
+		this.setAttribute('value', this.value);
+		this.setAttribute('data-hadFocus', true);
+	});
 });
