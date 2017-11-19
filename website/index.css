@@ -5,31 +5,45 @@ html,body{
 	font-size:125%;
 	min-height:min-content;
 }
+body{
+	text-align:Center;
+	height:100vh;
+}
+body:before {
+	content: '';
+	display: inline-block;
+	height: 100%; 
+	vertical-align: middle;
+}
 .popup{
-	background:#fff;
+	box-shadow: 0 0.25rem 3rem -1.5rem;
 	border-radius: .5rem;
 	border:1px solid #ddd;
 	padding:1rem;
 	box-sizing: content-box;
-
-	position:absolute;
-	left:0; right:0;
-	top:0; bottom:0;
-	margin:auto;
-
-	max-width:100%;
-	max-height:100%;
-	overflow:auto;
-	
-	width: min-content;
-    height: min-content;
-	
-	display:grid;
+	background:#fff;
+	display: inline-grid;
 	grid-template: "logo""form""result";
+	text-align:left;
+	vertical-align: middle;
+}
+#result{
+	margin: auto;
+	grid-area:result;
+}
+@media screen and (orientation: portrait) {
+	#result{
+		transition: max-height .2s ease 0s;
+		max-height:0;
+	}
 }
 @media screen and (orientation: landscape) {
 	.popup{
 		grid-template:"logo result""form result";
+	}
+	#result{
+		transition: max-width .2s ease 0s;
+		max-width:0;
 	}
 }
 #logo{
@@ -39,12 +53,6 @@ form{
 	grid-area:form;
 	padding-top:1rem;
 }
-#result{
-	display:none;
-    margin: auto;
-	grid-area:result;
-}
-
 input{
 	box-sizing:border-box;
 	display:block;
@@ -52,7 +60,7 @@ input{
 	padding:1rem;
 	outline: none!important;
 }
-input:not([type="button"]){
+input:not([type="submit"]){
 	margin-top:1.5rem;
 	border:2px solid #ddd;
 	background:#eee;
@@ -82,7 +90,7 @@ input[data-hadFocus=true]:not([value=""])+ span + label{
 	top:-5rem;
 	color: black;
 }
-input[type="button"]{
+input[type="submit"]{
 	margin-top:0;
 	border:0;
 	border-bottom:.2rem solid #005661;
@@ -92,8 +100,11 @@ input[type="button"]{
 	font-size:1rem;
 	cursor:pointer;
 }
-input[type="button"]:hover{text-decoration:underline}
-input[type="button"]:active{
+input[type="submit"]:hover,
+input[type="submit"]:focus{
+	text-decoration:underline
+}
+input[type="submit"]:active{
 	margin-top:.2rem;
 	border-bottom:0;
 }

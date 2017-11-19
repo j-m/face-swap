@@ -10,11 +10,11 @@
 	<div class="popup">
 		<img id="logo" src="http://picsum.photos/380/120">
 		<form>
-			<input name="father" value="" type="text" data-hadFocus=false onkeyup="this.setAttribute('value', this.value);this.setAttribute('data-hadFocus', true);"/><span></span>
+			<input name="father" id="father" value="" required type="text" data-hadFocus=false/><span></span>
 			<label for="father">Father</label>
-			<input name="mother" value="" type="text" data-hadFocus=false onkeyup="this.setAttribute('value', this.value);this.setAttribute('data-hadFocus', true);"/><span></span>
+			<input name="mother" id="mother" value="" required type="text" data-hadFocus=false/><span></span>
 			<label for="mother">Mother</label>
-			<input name="submit" id="submit" value="Reproduce" type="button"/>
+			<input name="submit" id="submit" value="Reproduce" type="submit"/>
 		</form>
 		<img id="result" src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif">
 	</div>
