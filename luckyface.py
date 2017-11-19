@@ -59,11 +59,11 @@ def get_parents(father, mother):
     return parents
 
 
-def make_baby(father, mother):
+def make_baby(father, mother, out_path="child.jpg"):
     parents = get_parents(father, mother)
     if os.path.isfile(parents[0][1]) and os.path.isfile(parents[1][1]):
         print(parents[0][0], '&', parents[1][0], 'are having a baby!')
-        faceswap.birth(parents[0][1], parents[1][1])
+        faceswap.birth(parents[0][1], parents[1][1], out_path)
     else:
         print('parents don\'t exist')
 

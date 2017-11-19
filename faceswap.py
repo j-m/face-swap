@@ -39,7 +39,7 @@ import cv2
 import dlib
 import numpy
 
-PREDICTOR_PATH = "/home/charlie/Documents/BrumHack/faceswap-master/shape_predictor_68_face_landmarks.dat"
+PREDICTOR_PATH = "shape_predictor_68_face_landmarks.dat"
 SCALE_FACTOR = 1
 FEATHER_AMOUNT = 11
 
@@ -197,7 +197,7 @@ def correct_colours(im1, im2, landmarks1):
             im2_blur.astype(numpy.float64))
 
 
-def birth(father, mother):
+def birth(father, mother, out_path="child.jpg"):
     im1, landmarks1 = read_im_and_landmarks(father)
     im2, landmarks2 = read_im_and_landmarks(mother)
 
@@ -214,4 +214,4 @@ def birth(father, mother):
 
     output_im = im1 * (1.0 - combined_mask) + warped_corrected_im2 * combined_mask
 
-    cv2.imwrite('child.jpg', output_im)
+    cv2.imwrite(out_path, output_im)
