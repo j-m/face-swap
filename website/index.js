@@ -9,7 +9,10 @@ $(document).ready(function(){
 			$('#result').css('max-height','20rem');
 			$.ajax({
 				'url': url,
-				'success': function(json) { $("#result").attr('src', json); }
+				'success': function(json) { 
+					$("#result").attr('src', json); 
+					busy = false;
+				}
 			});
 		}
 	});
