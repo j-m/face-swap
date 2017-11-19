@@ -1,16 +1,11 @@
-# luckyface.py - Will go through google images until it finds a valid face.
+#! python3
+#re added to dependencies
+#FILE NAME IS THE SAME AS PERSON_NAME
+#Can't get profession.
+#_gdf kno-fb-ctx
 
-# TRY EXCEPT IN GET PORTRAIT
-# _gdf kno-fb-ctx
-
-import os
-import requests
-import shutil
-import wikipedia
-import cv2
-import re
+import sys, wikipedia, shutil, requests, os, cv2, re
 from bs4 import BeautifulSoup
-
 import faceswap
 
 def get_valid_portrait(person):
@@ -64,29 +59,44 @@ def get_valid_portrait(person):
                 continue
                 #print('No faces...')
 
+def get_proffession(name):
+    name = (name.split())
+    search = 'https://www.google.co.uk/search?q='
+    for word in name:
+        search += word+'+'
+    result = requests.get(search[:-1])
+
+    if result.status_code == requests.codes.ok:
+        soup = BeautifulSoup(result.content,'lxml')
+    soup = BeautifulSoup(result.text, 'lxml')
+
+    proffession = soup.find_all("div", class_="_zdb _Pxg")
+    return proffession 
+
 def search(person):
     try:
-        wikipedia.page(person)
-        return wikipedia.page(person)
+        #wikipedia.page(person)
+        return wikipedia.page(person).title
     except wikipedia.exceptions.PageError:
-        print(person, 'not found.')
+        print(person,'not found.')
     if len(wikipedia.search(person)) > 0:
-        print('Assuming you meant', wikipedia.search('napoleona')[0])
-        return wikipedia.page(wikipedia.search('napoleona')[0])
+        print('Assuming you meant',wikipedia.search(person)[0])
+        return wikipedia.page(wikipedia.search(person)[0])
     print('Nobody found...')
 
-
 def get_portrait(wikipage):
-    result = requests.get('http://en.wikipedia.org/wiki/' + wikipage.title)
-    # All images in infobox
+    result = requests.get('http://en.wikipedia.org/wiki/'+wikipage.title)
+
+    #all images in infobox
     if result.status_code == requests.codes.ok:
-        soup = BeautifulSoup(result.content, 'lxml')
+        soup = BeautifulSoup(result.content,'lxml')
         images = soup.select('table.infobox a.image img[src]')
         portrait_link = images[0]['src']
-        return 'https:' + portrait_link
+        return 'https:'+portrait_link
     else:
         return get_portrait(wikipage)
 
+    print('No images found on',wikipage.title)
 
 def save_portrait(person):
     #print(person)
@@ -108,21 +118,30 @@ def save_portrait(person):
     
     return([person_page,person_summary])#person_page
 
-
 def all_images(wiki_search):
     return search(wiki_search).images
 
-
 def get_parents(father, mother):
-    parents = [save_portrait(father), save_portrait(mother)]
+    #will also get professions
+    parents = []
+    parents.append(save_portrait(father))
+    parents.append(save_portrait(mother))
+    #print(parents)
+
+    #for prnt in parents:
+        
+    
     return parents
+    #print(parents)
+    #dad = parents[0][1]
+    #mum = parents[1][1]
 
-
-def make_baby(father, mother, out_path="child.jpg"):
-    parents = get_parents(father, mother)
-    if os.path.isfile(parents[0][1]) and os.path.isfile(parents[1][1]):
-        print(parents[0][0], '&', parents[1][0], 'are having a baby!')
-        faceswap.birth(parents[0][1], parents[1][1], out_path)
+def make_baby(father, mother,out_path="child.jpg"):
+    parents = get_parents(father,mother)
+    if os.path.isfile(parents[0][0]) and os.path.isfile(parents[1][0]):
+        #print(father,'&',mother,'are having a baby!')
+        faceswap.birth(parents[0][0],parents[1][0], out_path)
+        #parents = make_baby(father,mother)
         parent_info = []
         for p in parents:
             name = p[0]
@@ -131,17 +150,29 @@ def make_baby(father, mother, out_path="child.jpg"):
             skills = re.search(r'(was an |was a |is a |is an )(.*)',a[0]).group(2)
             skills = skills.split('.')[0]
             #print(p[0],skills)
-            parent_info.append([name,skills])
-        print(parent_info)
+            parent_info.append((name,skills))
         return parent_info
+        #print(parents)
     else:
         print('parents don\'t exist')
-
-
+    
+    
+    
 if __name__ == '__main__':
-    parent1 = 'hitler'
-    parent2 = 'Phil Mitchell'
+    father = 'jennifer lawrence'# str(input('Father: ')) #sys.argv[1]
+    mother = 'winston churchill' #str(input('Mother: '))
+    #search(person)
     try:
-        make_baby(parent1, parent2)
+        print(make_baby(father, mother))
+
+    except wikipedia.exceptions.PageError:
+        print('Could not find that person.')
+        search = search(person)
+        if len(search) == 0:
+            print('No available suggestions')
+        else:
+            print('You may have meant: ', end='')
+            for suggestion in search:
+                print(suggestion, end='')
     except:
-        print('Error')
+        print('Error retreiving.')
