@@ -5,7 +5,8 @@ $(document).ready(function(){
 		if(busy==false){
 			busy = true;
 			var url = "";
-			$('#result').css('display', 'block');
+			$('#result').css('max-width','20rem');
+			$('#result').css('max-height','20rem');
 			var send = {father:$('#father').val(), mother:$('#mother').val()};
 			$.getJSON(url, send)
 			.done(function(data) {

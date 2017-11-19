@@ -26,12 +26,24 @@ body:before {
 	grid-template: "logo""form""result";
 	text-align:left;
 	vertical-align: middle;
-	transition: width 2s ease 0s;
-	width:auto;
+}
+#result{
+	margin: auto;
+	grid-area:result;
+}
+@media screen and (orientation: portrait) {
+	#result{
+		transition: max-height .2s ease 0s;
+		max-height:0;
+	}
 }
 @media screen and (orientation: landscape) {
 	.popup{
 		grid-template:"logo result""form result";
+	}
+	#result{
+		transition: max-width .2s ease 0s;
+		max-width:0;
 	}
 }
 #logo{
@@ -41,12 +53,6 @@ form{
 	grid-area:form;
 	padding-top:1rem;
 }
-#result{
-	display:none;
-    margin: auto;
-	grid-area:result;
-}
-
 input{
 	box-sizing:border-box;
 	display:block;
