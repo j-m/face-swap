@@ -1,0 +1,99 @@
+html,body{
+	margin:0;
+	background:#eee;
+	font-family:'Open Sans',sans-serif;
+	font-size:125%;
+	min-height:min-content;
+}
+.popup{
+	background:#fff;
+	border-radius: .5rem;
+	border:1px solid #ddd;
+	padding:1rem;
+	box-sizing: content-box;
+
+	position:absolute;
+	left:0; right:0;
+	top:0; bottom:0;
+	margin:auto;
+
+	max-width:100%;
+	max-height:100%;
+	overflow:auto;
+	
+	width: min-content;
+    height: min-content;
+	
+	display:grid;
+	grid-template: "logo""form""result";
+}
+@media screen and (orientation: landscape) {
+	.popup{
+		grid-template:"logo result""form result";
+	}
+}
+#logo{
+	grid-area:logo;
+}
+form{
+	grid-area:form;
+	padding-top:1rem;
+}
+#result{
+	display:none;
+    margin: auto;
+	grid-area:result;
+}
+
+input{
+	box-sizing:border-box;
+	display:block;
+	width:100%;
+	padding:1rem;
+	outline: none!important;
+}
+input:not([type="button"]){
+	margin-top:1.5rem;
+	border:2px solid #ddd;
+	background:#eee;
+}
+input + span{
+	display:block;
+	background:#3f87a6;
+	height:.25rem;
+	width:0;
+	transition:width .2s ease 0s; 
+}
+input[data-hadFocus=true]:not([value=""]) + span{ background:#53b055; }
+input[data-hadFocus=true][value=""] + span{ background:#c00000;}
+input:focus + span, 
+input[data-hadFocus=true]  + span,
+input[data-hadFocus=true] + span{width:100%;}
+label{    
+	position: relative;
+	height:0;
+	left:1rem;
+    top: -2.5rem;
+	transition:top .2s ease 0s,color .2s ease 0s;
+	color: #ccc;
+}
+input:focus + span + label,
+input[data-hadFocus=true]:not([value=""])+ span + label{
+	top:-5rem;
+	color: black;
+}
+input[type="button"]{
+	margin-top:0;
+	border:0;
+	border-bottom:.2rem solid #005661;
+	border-radius:.25rem;
+	background: #00838e;
+	color:white;
+	font-size:1rem;
+	cursor:pointer;
+}
+input[type="button"]:hover{text-decoration:underline}
+input[type="button"]:active{
+	margin-top:.2rem;
+	border-bottom:0;
+}
