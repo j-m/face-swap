@@ -54,7 +54,7 @@ input{
 	padding:1rem;
 	outline: none!important;
 }
-input:not([type="button"]){
+input:not([type="submit"]){
 	margin-top:1.5rem;
 	border:2px solid #ddd;
 	background:#eee;
@@ -84,7 +84,7 @@ input[data-hadFocus=true]:not([value=""])+ span + label{
 	top:-5rem;
 	color: black;
 }
-input[type="button"]{
+input[type="submit"]{
 	margin-top:0;
 	border:0;
 	border-bottom:.2rem solid #005661;
@@ -94,11 +94,11 @@ input[type="button"]{
 	font-size:1rem;
 	cursor:pointer;
 }
-input[type="button"]:hover,
-input[type="button"]:focus{
+input[type="submit"]:hover,
+input[type="submit"]:focus{
 	text-decoration:underline
 }
-input[type="button"]:active{
+input[type="submit"]:active{
 	margin-top:.2rem;
 	border-bottom:0;
 }
