@@ -2,23 +2,27 @@
 <html>
 
 <head>
-	<title>DnDedia</title>
-	<link rel="stylesheet" type="text/css" href="index.css"/>
-	<script src="jquery-3.2.1.min.js"></script>
+    <title>DnDedia</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link href="https://fonts.googleapis.com/css?family=Averia+Serif+Libre" rel="stylesheet">
+    <script src="jquery-3.2.1.min.js"></script>
 </head>
-<body>
-	<div class="popup">
-		<img id="logo" src="http://picsum.photos/380/120">
-		<form>
-			<input name="father" id="father" value="" required type="text" data-hadFocus=false/><span></span>
-			<label for="father">Father</label>
-			<input name="mother" id="mother" value="" required type="text" data-hadFocus=false/><span></span>
-			<label for="mother">Mother</label>
-			<input name="submit" id="submit" value="Reproduce" type="submit"/>
-		</form>
-		<img id="result" src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif">
-	</div>
-	<script src="index.js"></script>
+
+<body style="font-family: 'Averia Serif Libre', cursive;">
+    <div class="popup">
+        <div style="width: 500px">
+            <h1 style="font-family: 'Averia Serif Libre', cursive;">DnDedia</h1>
+        </div>
+        <form>
+            <input name="father" id="father" value="" required type="text" data-hadFocus=false/><span></span>
+            <label for="father">Father</label>
+            <input name="mother" id="mother" value="" required type="text" data-hadFocus=false/><span></span>
+            <label for="mother">Mother</label>
+            <input name="submit" id="submit" value="Reproduce" type="submit" />
+        </form>
+        <img id="result" src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif">
+    </div>
+    <script src="index.js"></script>
 </body>
 
 </html>

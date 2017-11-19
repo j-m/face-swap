@@ -5,8 +5,10 @@ import cloudinary.uploader
 import string
 import random
 import luckyface
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # cloudinary.config(
 #     cloud_name=os.environ['CLOUDINARY_CLOUD_NAME'],
@@ -101,6 +103,8 @@ def get_child():
 
     if url:
         write_cache(father, mother, url, filename)
+        print(url)
         return good(url)
 
     return bad()
+
