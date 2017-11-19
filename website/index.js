@@ -13,6 +13,10 @@ $(document).ready(function(){
 				'success': function(json) { 
 					$("#result").attr('src', json); 
 					busy = false;
+				},
+				'error': function() {
+					console.log('Failed');
+					$("#error").show();
 				}
 			});
 		}

@@ -9,6 +9,20 @@ body{
 	text-align:Center;
 	height:100vh;
 }
+#error{
+	background:rgba(0,0,0,0.5);
+	position:absolute;
+	top:0;
+	left:0;
+	width:100vw;
+	height:100vh;
+	z-index:2;
+	display:none;
+}
+#error p{
+	
+	color:white;padding:1rem;text-shadow:0 1px 2px rgba(0,0,0,.5);text-align:center;font-size:1rem;width:100%;top:50%;position:relative;margin:0;transform:translateY(-50%)
+}
 body:before {
 	content: '';
 	display: inline-block;
@@ -30,6 +44,7 @@ body:before {
 #result{
 	margin: auto;
 	grid-area:result;
+	padding-left:1rem;
 }
 @media screen and (orientation: portrait) {
 	#result{
