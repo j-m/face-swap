@@ -4,14 +4,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		if(busy==false){
 			busy = true;
-			var url = "http://4076c2c2.ngrok.io/get-child?father="+$('#father').val()+"&mother="+$('#mother').val();
+			var url = "http://4076c2c2.ngrok.io/get-child?father="+encodeURIComponent($('#father').val())+"&mother="+encodeURIComponent($('#mother').val());
 			$('#result').css('max-width','20rem');
 			$('#result').css('max-height','20rem');
-			$.getJSON(url, function(data) {
-				$('#result').src(data.image_url);
-				busy = false;
-			})
-			.fail(function(jqXHR, textStatus, errorThrown) { $("#error").show(); });
+			$.ajax({
+				'url': url,
+				'success': function(json) { $("#result").attr('src', json.image_url); }
+			});
 		}
 	});
 	$( "input" ).keyup(function() {
