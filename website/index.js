@@ -4,13 +4,11 @@ $(document).ready(function(){
 		event.preventDefault();
 		if(busy==false){
 			busy = true;
-			var url = "";
+			var url = "http://4076c2c2.ngrok.io/get-child?father="+$('#father').val()+"&mother="+$('#mother').val();
 			$('#result').css('max-width','20rem');
 			$('#result').css('max-height','20rem');
-			var send = {father:$('#father').val(), mother:$('#mother').val()};
-			$.getJSON(url, send)
-			.done(function(data) {
-				$('#result').src(data.src);
+			$.getJSON(url, function(data) {
+				$('#result').src(data.image_url);
 				busy = false;
 			})
 			.fail(function(jqXHR, textStatus, errorThrown) { $("#error").show(); });
