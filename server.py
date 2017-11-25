@@ -63,10 +63,7 @@ def bad():
 
 
 def good(url):
-    return str({
-        'status': 'OK',
-        'image_url': url
-    }), 200
+    return str(url), 200
 
 
 def generate_child(father, mother):
