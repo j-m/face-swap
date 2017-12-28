@@ -1,5 +1,4 @@
 'use strict';
-require('dotenv-safe').load();
 var listenOnPort = 8084,
     combinations = require('./combinations.json'),
     debug = require('debug'),
@@ -40,7 +39,7 @@ app.get('/combine', function (req, res) {
         if (votes[father + " and " + mother]) {
             res.json({ statusCode: 200, data: votes[father + " and " + mother] });
         } else {
-            https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=500&titles=Jennifer+Lawrence
+            //https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=500&titles=Jennifer+Lawrence
             request({ method: 'GET', url: uri.href }, function (err, res, body) {
                 if (err)
                     console.log("Get request failed: " + err);
