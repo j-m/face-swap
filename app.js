@@ -28,31 +28,31 @@ if (app.get('env') === 'development') {
         });
     });
 }
-app.get('/combine', function (req, res) {
+app.get('/names', function (req, res) {
     function callback() {
         res.json(result);
     }
     if (req.query.father && req.query.mother) {
-        var waiting = 1,
-            father = req.query.father,
+        var father = req.query.father,
             mother = req.query.mother;
         if (votes[father + " and " + mother]) {
             res.json({ statusCode: 200, data: votes[father + " and " + mother] });
         } else {
-            //https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=500&titles=Jennifer+Lawrence
-            request({ method: 'GET', url: uri.href }, function (err, res, body) {
-                if (err)
-                    console.log("Get request failed: " + err);
-                if (res.statusCode === 200) {
-                    var article = unfluff(body, 'en');
-                    if (article) {
-                        var title = article.softTitle, words = article.text.split(" ");
-                    }
-                } else { console.log("GET request failed, error code: " + res.statusCode); }
+            father = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=500&titles=" + father;
+            mother = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=500&titles=" + mother;
+            var waiting = 2;
+            request({ method: 'GET', url: father }, function (err, res, data) {
+                if (err || res.statusCode !== 200) console.log("GET request failed, error " + res.statusCode + " + " + err); 
+                else father = data.query.pages[Object.keys(data.query.pages)[0]].thumbnail.source;
+                if (--waiting === 0) callback();
+            });
+            request({ method: 'GET', url: mother }, function (err, res, data) {
+                if (err || res.statusCode !== 200) console.log("GET request failed, error " + res.statusCode + " + " + err);
+                else mother = data.query.pages[Object.keys(data.query.pages)[0]].thumbnail.source;
                 if (--waiting === 0) callback();
             });
         }
-    } else res.json({ statusCode: 400, data:"Bad Request: URI Parameter missing"});
+    } else res.json({ statusCode: 400, data: "Bad Request: URI Parameter missing" });
 });
 app.get('/', function (req, res) { res.sendFile(__dirname + '/public/index.html'); });
 app.get('*', function (req, res) { res.sendFile(__dirname + '/public/error.html'); });
